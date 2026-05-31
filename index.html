@@ -301,9 +301,41 @@ img{max-width:100%;display:block}
   .how-grid{grid-template-columns:1fr}
   .hero-trust{gap:12px}
 }
+
+/* ── Password gate ── */
+#gate{position:fixed;inset:0;z-index:9999;background:#F5FAF9;display:flex;align-items:center;justify-content:center;padding:24px}
+.gate-card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:48px 40px;width:100%;max-width:400px;text-align:center;box-shadow:var(--shadow-lg)}
+.gate-logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:32px}
+.gate-gem{width:30px;height:30px;background:var(--teal);transform:rotate(45deg);border-radius:4px;flex-shrink:0}
+.gate-brand{font-size:24px;font-weight:700;color:var(--text);letter-spacing:-.3px}
+.gate-card h2{font-size:18px;font-weight:600;color:var(--text);margin-bottom:8px}
+.gate-card p{font-size:14px;color:var(--text-muted);line-height:1.55;margin-bottom:28px}
+.gate-input{font-family:var(--sans);width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:9px;font-size:15px;color:var(--text);background:var(--off-white);outline:none;transition:border-color .2s,background .2s;margin-bottom:10px}
+.gate-input:focus{border-color:var(--teal);background:#fff}
+.gate-btn{font-family:var(--sans);width:100%;padding:13px;background:var(--teal);color:#fff;border:none;border-radius:9px;font-size:15px;font-weight:600;cursor:pointer;transition:background .2s}
+.gate-btn:hover{background:var(--teal-dark)}
+.gate-error{display:none;margin-top:12px;font-size:13px;color:#b91c1c;font-weight:500}
 </style>
 </head>
 <body>
+
+<!-- PASSWORD GATE -->
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-logo">
+      <div class="gate-gem"></div>
+      <span class="gate-brand">Corellr</span>
+    </div>
+    <h2>Preview access</h2>
+    <p>This site is in private preview.<br>Enter your access code to continue.</p>
+    <input class="gate-input" type="password" id="gate-pw" placeholder="Access code" autocomplete="off">
+    <button class="gate-btn" id="gate-btn">Continue</button>
+    <p class="gate-error" id="gate-err">Incorrect access code. Please try again.</p>
+  </div>
+</div>
+
+<!-- SITE -->
+<div id="site" style="display:none">
 
 <!-- NAV -->
 <nav id="nav">
@@ -682,7 +714,31 @@ img{max-width:100%;display:block}
   </div>
 </footer>
 
+</div><!-- /site -->
+
 <script>
+// Password gate
+(function(){
+  const PW='corellr2026';
+  function unlock(){
+    document.getElementById('gate').style.display='none';
+    document.getElementById('site').style.display='block';
+    sessionStorage.setItem('corellr_preview','1');
+  }
+  if(sessionStorage.getItem('corellr_preview')==='1'){unlock();return}
+  document.getElementById('gate-btn').addEventListener('click',check);
+  document.getElementById('gate-pw').addEventListener('keydown',function(e){if(e.key==='Enter')check()});
+  function check(){
+    if(document.getElementById('gate-pw').value===PW){
+      unlock();
+    } else {
+      document.getElementById('gate-err').style.display='block';
+      document.getElementById('gate-pw').value='';
+      document.getElementById('gate-pw').focus();
+    }
+  }
+})();
+
 // Nav scroll state
 const nav=document.getElementById('nav');
 window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passive:true});
