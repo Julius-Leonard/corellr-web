@@ -3,238 +3,724 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Corellr — Financial Planning for NFPs</title>
+<meta name="description" content="Corellr — Budget planning purpose-built for Australian not-for-profits. Headcount, salary packaging, grant tracking, and board reporting without the enterprise price tag.">
+<title>Corellr — Budget Planning for Australian NFPs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--teal:#0A7B6C;--teal-light:#E8F5F3;--dark:#1C1C1A;--grey:#888;--border:#E8E6DF;--bg:#F8F7F4}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--dark);min-height:100vh;display:flex;flex-direction:column}
-#login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
-.login-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:48px 40px;width:100%;max-width:400px;text-align:center}
-.logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:32px}
-.diamond{width:32px;height:32px;background:var(--teal);transform:rotate(45deg);border-radius:4px;flex-shrink:0}
-.brand{font-size:26px;font-weight:700;color:var(--dark)}
-.login-card h2{font-size:18px;font-weight:600;margin-bottom:8px}
-.login-card p{font-size:14px;color:var(--grey);margin-bottom:32px}
-input{width:100%;padding:12px 16px;border:1px solid var(--border);border-radius:8px;font-size:15px;font-family:inherit;margin-bottom:12px;outline:none}
-input:focus{border-color:var(--teal)}
-button{width:100%;padding:12px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;font-family:inherit;cursor:pointer}
-button:hover{background:#085041}
-.error{color:#A32D2D;font-size:13px;margin-top:10px;display:none}
-#site{display:none}
-nav{background:var(--dark);padding:0 48px;height:60px;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.nav-d{width:22px;height:22px;background:var(--teal);transform:rotate(45deg);border-radius:3px}
-.nav-brand{font-size:20px;font-weight:700;color:#fff}
-.nav-links{display:flex;align-items:center;gap:28px;list-style:none}
-.nav-links a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:14px}
-.nav-links a:hover{color:#fff}
-.nav-cta{background:var(--teal)!important;color:#fff!important;padding:8px 18px;border-radius:8px;font-weight:600!important}
-.hero{background:var(--dark);padding:80px 48px 100px;text-align:center}
-.badge{display:inline-block;background:rgba(10,123,108,0.2);color:#5DCAA5;font-size:12px;font-weight:600;padding:6px 16px;border-radius:20px;margin-bottom:24px;letter-spacing:.5px}
-.hero h1{font-size:52px;font-weight:700;color:#fff;line-height:1.1;margin-bottom:20px;max-width:700px;margin-left:auto;margin-right:auto;letter-spacing:-1px}
-.hero h1 span{color:#5DCAA5}
-.hero p{font-size:18px;color:rgba(255,255,255,0.6);max-width:560px;margin:0 auto 40px;line-height:1.6}
-.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn-p{background:var(--teal);color:#fff;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none}
-.btn-p:hover{background:#085041}
-.btn-s{background:rgba(255,255,255,0.1);color:#fff;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none}
-.btn-s:hover{background:rgba(255,255,255,0.15)}
-.preview{background:var(--dark);padding:0 48px 80px;display:flex;justify-content:center}
-.preview-inner{background:#111;border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:16px;max-width:860px;width:100%}
-.dots{display:flex;gap:6px;margin-bottom:12px}
-.dot{width:10px;height:10px;border-radius:50%}
-.mockup{background:#1a1a18;border-radius:8px;padding:20px;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.mc{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px}
-.mc-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:10px}
-.mc h4{font-size:13px;font-weight:600;color:#fff;margin-bottom:4px}
-.mc p{font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:12px}
-.stats{display:flex;gap:8px}
-.stat{background:rgba(255,255,255,0.06);border-radius:6px;padding:8px 10px;flex:1}
-.stat-l{font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:3px}
-.stat-v{font-size:15px;font-weight:600;color:#fff}
-.section{padding:80px 48px}
-.section-label{font-size:12px;font-weight:600;color:var(--teal);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px}
-.section h2{font-size:36px;font-weight:700;color:var(--dark);margin-bottom:16px;letter-spacing:-.5px;max-width:600px}
-.section>p{font-size:16px;color:var(--grey);max-width:560px;line-height:1.7;margin-bottom:48px}
-.features{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.fc{background:#fff;border:1px solid var(--border);border-radius:12px;padding:28px}
-.fc-icon{width:44px;height:44px;border-radius:10px;background:var(--teal-light);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px}
-.fc h3{font-size:16px;font-weight:600;margin-bottom:8px}
-.fc p{font-size:14px;color:var(--grey);line-height:1.6}
-.nfp{background:var(--teal);padding:80px 48px;text-align:center}
-.nfp h2{font-size:36px;font-weight:700;color:#fff;margin-bottom:16px;letter-spacing:-.5px}
-.nfp p{font-size:16px;color:rgba(255,255,255,0.8);max-width:560px;margin:0 auto 40px;line-height:1.7}
-.pills{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
-.pill{background:rgba(255,255,255,0.15);color:#fff;padding:8px 18px;border-radius:20px;font-size:14px;font-weight:500}
-.pricing-wrap{padding:80px 48px;background:var(--bg)}
-.pricing-wrap h2{font-size:36px;font-weight:700;text-align:center;margin-bottom:8px;letter-spacing:-.5px}
-.pricing-wrap>p{font-size:16px;color:var(--grey);text-align:center;margin-bottom:48px}
-.pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:900px;margin:0 auto}
-.pc{background:#fff;border:1px solid var(--border);border-radius:16px;padding:32px;text-align:center}
-.pc.featured{border:2px solid var(--teal);position:relative}
-.p-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--teal);color:#fff;font-size:11px;font-weight:600;padding:4px 14px;border-radius:20px;white-space:nowrap}
-.pc h3{font-size:18px;font-weight:700;margin-bottom:8px}
-.price{font-size:36px;font-weight:700;color:var(--dark);margin:16px 0 4px}
-.price span{font-size:16px;font-weight:400;color:var(--grey)}
-.price-note{font-size:13px;color:var(--grey);margin-bottom:24px}
-.pc ul{list-style:none;text-align:left;margin-bottom:28px}
-.pc ul li{font-size:14px;padding:6px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
-.pc ul li::before{content:"✓";color:var(--teal);font-weight:700;flex-shrink:0}
-.btn-o{display:block;border:2px solid var(--teal);color:var(--teal);padding:12px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;text-align:center}
-.btn-o:hover{background:var(--teal);color:#fff}
-.btn-f{display:block;background:var(--teal);color:#fff;padding:12px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;text-align:center}
-.btn-f:hover{background:#085041}
-.nfp-note{text-align:center;margin-top:24px;font-size:14px;color:var(--grey)}
-.nfp-note strong{color:var(--teal)}
-footer{background:var(--dark);padding:48px;margin-top:auto}
-.foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
-.foot-logo{display:flex;align-items:center;gap:10px}
-.foot-d{width:20px;height:20px;background:var(--teal);transform:rotate(45deg);border-radius:2px}
-.foot-brand{font-size:18px;font-weight:700;color:#fff}
-.foot-links{display:flex;gap:24px;list-style:none}
-.foot-links a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:14px}
-.foot-links a:hover{color:#fff}
-.foot-copy{color:rgba(255,255,255,0.3);font-size:13px;width:100%}
+
+:root{
+  --teal:#0A7B6C;
+  --teal-dark:#085F55;
+  --teal-light:#E8F5F3;
+  --teal-glow:rgba(10,123,108,0.15);
+  --accent:#5DCAA5;
+  --hero-bg:#091C1A;
+  --nfp-bg:#0D2420;
+  --off-white:#F5FAF9;
+  --text:#111B1A;
+  --text-mid:#3D5250;
+  --text-muted:#6B8280;
+  --border:#DDE8E6;
+  --serif:'Instrument Serif',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --r:12px;
+  --r-lg:20px;
+  --max-w:1140px;
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.08);
+  --shadow-lg:0 4px 8px rgba(0,0,0,.06),0 16px 40px rgba(0,0,0,.14);
+}
+
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--sans);background:#fff;color:var(--text);line-height:1.6;overflow-x:hidden}
+a{color:inherit}
+img{max-width:100%;display:block}
+
+/* ── Scroll reveal ── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}.d5{transition-delay:.40s}
+
+/* ── Shared buttons ── */
+.btn-primary{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:15px;font-weight:600;color:#fff;background:var(--teal);padding:13px 22px;border-radius:10px;text-decoration:none;border:none;cursor:pointer;transition:background .2s,transform .15s}
+.btn-primary:hover{background:var(--teal-dark);transform:translateY(-1px)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:15px;font-weight:600;color:rgba(255,255,255,.75);background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.2);padding:13px 22px;border-radius:10px;text-decoration:none;transition:all .2s}
+.btn-ghost:hover{color:#fff;background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.4)}
+.btn-outline{display:block;text-align:center;font-family:var(--sans);font-size:14px;font-weight:600;color:var(--teal);border:1.5px solid var(--teal);padding:12px 18px;border-radius:10px;text-decoration:none;transition:all .2s}
+.btn-outline:hover{background:var(--teal);color:#fff}
+.btn-filled{display:block;text-align:center;font-family:var(--sans);font-size:14px;font-weight:600;color:#fff;background:var(--teal);padding:12px 18px;border-radius:10px;text-decoration:none;transition:background .2s}
+.btn-filled:hover{background:var(--teal-dark)}
+
+/* ── Section shared ── */
+.section{padding:96px 0}
+.wrap{max-width:var(--max-w);margin:0 auto;padding:0 48px}
+.eyebrow{font-size:12px;font-weight:600;color:var(--teal);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px}
+.sec-title{font-family:var(--serif);font-size:clamp(30px,4vw,46px);font-weight:400;line-height:1.12;letter-spacing:-.4px;margin-bottom:14px}
+.sec-title em{font-style:italic;color:var(--teal)}
+.sec-sub{font-size:17px;color:var(--text-muted);line-height:1.7;max-width:540px}
+.sec-head{margin-bottom:52px}
+.sec-head.center{text-align:center}
+.sec-head.center .sec-sub{margin:0 auto}
+
+/* ════════════════════════════
+   NAV
+════════════════════════════ */
+#nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .3s,box-shadow .3s}
+#nav.scrolled{background:rgba(255,255,255,.96);backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--border)}
+#nav.scrolled .nav-wordmark{color:var(--text)}
+#nav.scrolled .nav-link{color:var(--text-mid)}
+#nav.scrolled .nav-link:hover{color:var(--teal)}
+#nav.scrolled .nav-signin{color:var(--teal);border-color:var(--teal)}
+#nav.scrolled .nav-signin:hover{background:var(--teal);color:#fff}
+#nav.scrolled .bar{background:var(--text)}
+
+.nav-inner{max-width:var(--max-w);margin:0 auto;padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-gem{width:26px;height:26px;background:var(--teal);transform:rotate(45deg);border-radius:4px;flex-shrink:0}
+.nav-wordmark{font-size:20px;font-weight:700;color:#fff;letter-spacing:-.3px}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none}
+.nav-link{font-size:14.5px;font-weight:500;color:rgba(255,255,255,.72);text-decoration:none;padding:8px 13px;border-radius:8px;transition:color .2s}
+.nav-link:hover{color:#fff}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-signin{font-size:14px;font-weight:600;color:rgba(255,255,255,.8);text-decoration:none;padding:8px 16px;border:1.5px solid rgba(255,255,255,.28);border-radius:8px;transition:all .2s}
+.nav-signin:hover{border-color:rgba(255,255,255,.7);color:#fff}
+.nav-cta{font-size:14px;font-weight:600;color:#fff;background:var(--teal);text-decoration:none;padding:9px 18px;border-radius:8px;transition:background .2s}
+.nav-cta:hover{background:var(--teal-dark)}
+.nav-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px}
+.bar{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all .25s}
+.nav-drawer{display:none;background:#fff;border-top:1px solid var(--border);padding:12px 20px 24px}
+.nav-drawer a{display:block;font-size:16px;font-weight:500;color:var(--text);text-decoration:none;padding:12px 0;border-bottom:1px solid var(--border)}
+.nav-drawer .d-cta{border:none;margin-top:14px;background:var(--teal);color:#fff;text-align:center;border-radius:10px;padding:14px;font-weight:600}
+
+/* ════════════════════════════
+   HERO
+════════════════════════════ */
+.hero{background:var(--hero-bg);padding:152px 48px 96px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-240px;right:-160px;width:720px;height:720px;background:radial-gradient(circle,rgba(10,123,108,.16) 0%,transparent 65%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-120px;left:-80px;width:500px;height:500px;background:radial-gradient(circle,rgba(18,160,144,.07) 0%,transparent 65%);pointer-events:none}
+
+.hero-inner{max-width:var(--max-w);margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;position:relative;z-index:1}
+
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(10,123,108,.2);border:1px solid rgba(10,123,108,.4);color:var(--accent);font-size:12px;font-weight:600;padding:6px 14px;border-radius:20px;letter-spacing:.8px;text-transform:uppercase;margin-bottom:28px}
+.badge-dot{width:6px;height:6px;background:var(--accent);border-radius:50%}
+.hero h1{font-family:var(--serif);font-size:clamp(38px,5vw,60px);font-weight:400;color:#fff;line-height:1.1;letter-spacing:-.5px;margin-bottom:20px}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero-sub{font-size:17px;color:rgba(255,255,255,.58);line-height:1.72;max-width:460px;margin-bottom:36px}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px}
+.hero-trust{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:7px;font-size:13px;color:rgba(255,255,255,.45)}
+.trust-tick{width:17px;height:17px;border-radius:50%;background:rgba(10,123,108,.3);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--accent);font-weight:700}
+
+/* Dashboard mockup */
+.hero-visual{position:relative}
+.dash-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:24px;backdrop-filter:blur(6px)}
+.dash-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.dash-hdr-title{font-size:13px;font-weight:600;color:#fff}
+.dash-pill{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(93,202,165,.15);color:var(--accent)}
+.dash-kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}
+.kpi{background:rgba(255,255,255,.055);border-radius:10px;padding:13px}
+.kpi-label{font-size:11px;color:rgba(255,255,255,.38);margin-bottom:4px}
+.kpi-value{font-size:19px;font-weight:700;color:#fff}
+.kpi-sub{font-size:11px;color:rgba(93,202,165,.65);margin-top:2px}
+.dash-bars{margin-top:4px}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.bar-lbl{font-size:11px;color:rgba(255,255,255,.38);width:72px;flex-shrink:0}
+.bar-track{flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px}
+.bar-val{font-size:11px;font-weight:600;color:rgba(255,255,255,.5);width:44px;text-align:right;flex-shrink:0}
+.mini-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.mini{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px}
+.mini-icon{font-size:17px;margin-bottom:7px}
+.mini-name{font-size:11px;font-weight:600;color:rgba(255,255,255,.55);margin-bottom:3px}
+.mini-val{font-size:14px;font-weight:700;color:#fff}
+
+/* ════════════════════════════
+   FEATURES
+════════════════════════════ */
+.features-section{background:var(--off-white)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.feat-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:30px;transition:box-shadow .25s,transform .25s}
+.feat-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.feat-icon{width:46px;height:46px;background:var(--teal-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:18px}
+.feat-title{font-size:16px;font-weight:600;color:var(--text);margin-bottom:9px}
+.feat-desc{font-size:14px;color:var(--text-muted);line-height:1.65}
+
+/* ════════════════════════════
+   HOW IT WORKS
+════════════════════════════ */
+.how-section{background:#fff}
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;position:relative}
+.how-grid::before{content:'';position:absolute;top:27px;left:calc(12.5% + 20px);right:calc(12.5% + 20px);height:2px;background:linear-gradient(to right,var(--teal-light),var(--teal),var(--teal-light))}
+.how-step{text-align:center}
+.how-num{width:54px;height:54px;background:var(--teal);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;margin:0 auto 20px;position:relative;z-index:1}
+.how-title{font-size:16px;font-weight:600;color:var(--text);margin-bottom:9px}
+.how-desc{font-size:14px;color:var(--text-muted);line-height:1.62}
+
+/* ════════════════════════════
+   NFP SECTION
+════════════════════════════ */
+.nfp-section{background:var(--nfp-bg);padding:96px 0}
+.nfp-head{text-align:center;margin-bottom:60px}
+.nfp-eyebrow{display:inline-block;font-size:12px;font-weight:600;color:var(--accent);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px}
+.nfp-title{font-family:var(--serif);font-size:clamp(30px,4vw,48px);font-weight:400;color:#fff;line-height:1.12;letter-spacing:-.4px;margin-bottom:14px}
+.nfp-sub{font-size:17px;color:rgba(255,255,255,.5);max-width:550px;margin:0 auto;line-height:1.7}
+
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:52px}
+.stat-box{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-lg);padding:28px 20px;text-align:center}
+.stat-val{font-family:var(--serif);font-size:42px;font-weight:400;color:var(--accent);line-height:1;margin-bottom:9px}
+.stat-lbl{font-size:13px;color:rgba(255,255,255,.4);line-height:1.5}
+
+.nfp-feats{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:48px}
+.nfp-feat{display:flex;gap:16px;padding:22px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--r)}
+.nfp-feat-icon{width:40px;height:40px;background:rgba(10,123,108,.25);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.nfp-feat-title{font-size:15px;font-weight:600;color:#fff;margin-bottom:5px}
+.nfp-feat-desc{font-size:13px;color:rgba(255,255,255,.42);line-height:1.6}
+
+.nfp-cta{text-align:center}
+.nfp-cta .btn-primary{font-size:15px;padding:15px 28px}
+.nfp-note{margin-top:14px;font-size:13px;color:rgba(255,255,255,.3)}
+
+/* ════════════════════════════
+   PRICING
+════════════════════════════ */
+.pricing-section{background:var(--off-white)}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:920px;margin:0 auto}
+.price-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--r-lg);padding:32px;display:flex;flex-direction:column;position:relative}
+.price-card.pop{border-color:var(--teal);box-shadow:0 0 0 4px rgba(10,123,108,.07)}
+.pop-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--teal);color:#fff;font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;white-space:nowrap;letter-spacing:.4px}
+.price-tier{font-size:12px;font-weight:700;color:var(--teal);letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px}
+.price-name{font-family:var(--serif);font-size:26px;font-weight:400;color:var(--text);margin-bottom:12px}
+.price-amount{display:flex;align-items:baseline;gap:2px;margin-bottom:4px}
+.price-currency{font-size:18px;font-weight:600;color:var(--text-mid)}
+.price-num{font-size:42px;font-weight:700;color:var(--text);line-height:1}
+.price-period{font-size:14px;color:var(--text-muted)}
+.price-desc{font-size:13px;color:var(--text-muted);margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--border)}
+.price-features{list-style:none;margin-bottom:26px;flex:1}
+.price-features li{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--text-mid);padding:6px 0}
+.pcheck{width:17px;height:17px;background:var(--teal-light);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--teal);font-size:10px;font-weight:700;margin-top:1px}
+.pricing-footer-note{text-align:center;margin-top:34px;font-size:14px;color:var(--text-muted)}
+.pricing-footer-note strong{color:var(--teal)}
+.pricing-footer-note a{color:var(--teal)}
+
+/* ════════════════════════════
+   ABOUT
+════════════════════════════ */
+.about-section{background:#fff}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.about-body{font-size:16px;color:var(--text-mid);line-height:1.75;margin-bottom:14px}
+.about-values{margin-top:28px;display:flex;flex-direction:column;gap:11px}
+.about-val{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-mid)}
+.val-dot{width:7px;height:7px;background:var(--teal);border-radius:50%;flex-shrink:0}
+.about-quote-card{background:var(--off-white);border:1px solid var(--border);border-radius:var(--r-lg);padding:36px}
+.quote-text{font-family:var(--serif);font-size:21px;font-style:italic;color:var(--text);line-height:1.48;margin-bottom:24px}
+.quote-author{display:flex;align-items:center;gap:14px}
+.q-avatar{width:44px;height:44px;background:var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff;flex-shrink:0}
+.q-name{font-size:14px;font-weight:600;color:var(--text)}
+.q-role{font-size:13px;color:var(--text-muted)}
+
+/* ════════════════════════════
+   CONTACT
+════════════════════════════ */
+.contact-section{background:var(--off-white)}
+.contact-grid{display:grid;grid-template-columns:1fr 1.35fr;gap:80px;align-items:start}
+.contact-body{font-size:16px;color:var(--text-muted);line-height:1.7;margin-bottom:30px}
+.contact-items{display:flex;flex-direction:column;gap:14px}
+.contact-item{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--text-mid)}
+.ci-icon{width:36px;height:36px;background:var(--teal-light);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.contact-form{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:36px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fg{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.fg:last-of-type{margin-bottom:0}
+.flabel{font-size:12.5px;font-weight:600;color:var(--text-mid)}
+.finput,.ftextarea{font-family:var(--sans);font-size:14px;color:var(--text);background:var(--off-white);border:1.5px solid var(--border);border-radius:8px;padding:11px 13px;outline:none;transition:border-color .2s,background .2s;width:100%}
+.ftextarea{resize:vertical;min-height:108px}
+.finput:focus,.ftextarea:focus{border-color:var(--teal);background:#fff}
+.finput::placeholder,.ftextarea::placeholder{color:var(--text-muted)}
+.form-cta{margin-top:20px}
+.form-cta .btn-primary{width:100%;justify-content:center;font-size:15px;padding:14px}
+.form-success{display:none;margin-top:16px;padding:14px;background:var(--teal-light);border-radius:8px;color:var(--teal);font-size:14px;font-weight:500;text-align:center}
+
+/* ════════════════════════════
+   FOOTER
+════════════════════════════ */
+.footer{background:var(--hero-bg);padding:64px 0 32px}
+.footer-top{display:grid;grid-template-columns:220px 1fr 1fr 1fr;gap:48px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:30px}
+.footer-brand-desc{font-size:13px;color:rgba(255,255,255,.38);line-height:1.65;margin:14px 0 20px}
+.footer-cta{display:inline-block;font-size:13px;font-weight:600;color:#fff;background:var(--teal);padding:9px 16px;border-radius:8px;text-decoration:none;transition:background .2s}
+.footer-cta:hover{background:var(--teal-dark)}
+.footer-col-title{font-size:11px;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:1px;text-transform:uppercase;margin-bottom:16px}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-links a{font-size:13.5px;color:rgba(255,255,255,.45);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:#fff}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-copy{font-size:13px;color:rgba(255,255,255,.22)}
+.footer-legal{display:flex;gap:20px;list-style:none}
+.footer-legal a{font-size:13px;color:rgba(255,255,255,.28);text-decoration:none;transition:color .2s}
+.footer-legal a:hover{color:rgba(255,255,255,.6)}
+
+/* ════════════════════════════
+   RESPONSIVE
+════════════════════════════ */
+@media(max-width:1024px){
+  .wrap,.nav-inner,.footer-inner{padding:0 32px}
+  .hero{padding:140px 32px 80px}
+  .hero-inner{gap:40px}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+}
 @media(max-width:768px){
-  nav{padding:0 20px}.nav-links{display:none}
-  .hero{padding:60px 20px 80px}.hero h1{font-size:36px}
-  .preview{padding:0 20px 60px}.mockup{grid-template-columns:1fr}
-  .section{padding:60px 20px}.features{grid-template-columns:1fr}
-  .nfp{padding:60px 20px}.pricing-wrap{padding:60px 20px}
-  .pricing{grid-template-columns:1fr}
-  footer{padding:32px 20px}
-  .login-card{padding:36px 24px}
+  .nav-inner{padding:0 20px}
+  .nav-links,.nav-actions{display:none}
+  .nav-burger{display:flex}
+  .hero{padding:116px 20px 72px}
+  .hero-inner{grid-template-columns:1fr}
+  .hero-visual{display:none}
+  .hero-sub{max-width:100%}
+  .wrap{padding:0 20px}
+  .section{padding:72px 0}
+  .feat-grid{grid-template-columns:1fr}
+  .how-grid{grid-template-columns:repeat(2,1fr)}
+  .how-grid::before{display:none}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .nfp-feats{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr;max-width:400px}
+  .price-card.pop{order:-1}
+  .about-grid{grid-template-columns:1fr;gap:40px}
+  .contact-grid{grid-template-columns:1fr;gap:40px}
+  .form-row{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .footer-inner{padding:0 20px}
+  .nfp-section,.footer{padding-left:0;padding-right:0}
+}
+@media(max-width:480px){
+  .hero h1{font-size:34px}
+  .stat-val{font-size:32px}
+  .footer-top{grid-template-columns:1fr}
+  .how-grid{grid-template-columns:1fr}
+  .hero-trust{gap:12px}
 }
 </style>
 </head>
 <body>
-<div id="login-screen">
-  <div class="login-card">
-    <div class="logo"><div class="diamond"></div><span class="brand">Corellr</span></div>
-    <h2>Preview access</h2>
-    <p>This site is in private preview.<br>Enter your access code to continue.</p>
-    <input type="password" id="pw" placeholder="Access code" autocomplete="off" />
-    <button onclick="check()">Continue</button>
-    <p class="error" id="err">Incorrect access code. Please try again.</p>
-  </div>
-</div>
-<div id="site">
-  <nav>
-    <a href="#" class="nav-logo"><div class="nav-d"></div><span class="nav-brand">Corellr</span></a>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-gem"></div>
+      <span class="nav-wordmark">Corellr</span>
+    </a>
     <ul class="nav-links">
-      <li><a href="#features">Features</a></li>
-      <li><a href="#nfp">For NFPs</a></li>
-      <li><a href="#pricing">Pricing</a></li>
-      <li><a href="https://app.corellr.com">Sign in</a></li>
-      <li><a href="https://app.corellr.com" class="nav-cta">Start free trial</a></li>
+      <li><a href="#features" class="nav-link">Features</a></li>
+      <li><a href="#how-it-works" class="nav-link">How it works</a></li>
+      <li><a href="#nfp" class="nav-link">For NFPs</a></li>
+      <li><a href="#pricing" class="nav-link">Pricing</a></li>
+      <li><a href="#about" class="nav-link">About</a></li>
     </ul>
-  </nav>
-  <section class="hero">
-    <div class="badge">BUILT FOR AUSTRALIAN NFPs</div>
-    <h1>Budget planning built for<br><span>people who care</span></h1>
-    <p>Headcount and operating budget planning purpose-built for Australian NFP finance teams. No spreadsheets. No enterprise price tag.</p>
-    <div class="hero-btns">
-      <a href="https://app.corellr.com" class="btn-p">Start 30-day free trial</a>
-      <a href="#features" class="btn-s">See how it works</a>
+    <div class="nav-actions">
+      <a href="https://app.corellr.com" class="nav-signin">Sign in</a>
+      <a href="https://app.corellr.com" class="nav-cta">Start free trial</a>
     </div>
-  </section>
-  <div class="preview">
-    <div class="preview-inner">
-      <div class="dots">
-        <div class="dot" style="background:#ff5f57"></div>
-        <div class="dot" style="background:#febc2e"></div>
-        <div class="dot" style="background:#28c840"></div>
+    <button class="nav-burger" id="burger" aria-label="Toggle menu">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+  </div>
+  <div class="nav-drawer" id="drawer">
+    <a href="#features">Features</a>
+    <a href="#how-it-works">How it works</a>
+    <a href="#nfp">For NFPs</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <a href="https://app.corellr.com" class="d-cta">Start free trial →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge reveal"><span class="badge-dot"></span>Built for Australian NFPs</div>
+      <h1 class="reveal d1">Budget planning <em>built for</em><br>those who care</h1>
+      <p class="hero-sub reveal d2">Purpose-built headcount and operating budget planning for Australian not-for-profit finance teams. Salary packaging, grant tracking, and board reporting — without the enterprise price tag.</p>
+      <div class="hero-btns reveal d3">
+        <a href="https://app.corellr.com" class="btn-primary">Start 30-day free trial</a>
+        <a href="#features" class="btn-ghost">Explore features</a>
       </div>
-      <div class="mockup">
-        <div class="mc"><div class="mc-icon" style="background:rgba(10,123,108,0.2)">👥</div><h4>Headcount</h4><p>People cost planning</p><div class="stats"><div class="stat"><div class="stat-l">Headcount</div><div class="stat-v">188</div></div><div class="stat"><div class="stat-l">Full-year TEC</div><div class="stat-v">$21.9M</div></div></div></div>
-        <div class="mc"><div class="mc-icon" style="background:rgba(12,68,124,0.2)">📋</div><h4>Opex</h4><p>Operating expenses</p><div class="stats"><div class="stat"><div class="stat-l">Budget lines</div><div class="stat-v">24</div></div><div class="stat"><div class="stat-l">Full-year opex</div><div class="stat-v">$3.4M</div></div></div></div>
-        <div class="mc"><div class="mc-icon" style="background:rgba(186,117,23,0.2)">📊</div><h4>Consolidated</h4><p>Full P&amp;L view</p><div class="stats"><div class="stat"><div class="stat-l">Total budget</div><div class="stat-v">$25.3M</div></div><div class="stat"><div class="stat-l">Avg monthly</div><div class="stat-v">$2.1M</div></div></div></div>
-        <div class="mc"><div class="mc-icon" style="background:rgba(83,74,183,0.2)">🏢</div><h4>Master roster</h4><p>Organisation-wide</p><div class="stats"><div class="stat"><div class="stat-l">Employees</div><div class="stat-v">188</div></div><div class="stat"><div class="stat-l">Departments</div><div class="stat-v">10</div></div></div></div>
+      <div class="hero-trust reveal d4">
+        <div class="trust-item"><div class="trust-tick">✓</div>No credit card required</div>
+        <div class="trust-item"><div class="trust-tick">✓</div>Setup in under 30 minutes</div>
+        <div class="trust-item"><div class="trust-tick">✓</div>Cancel anytime</div>
+      </div>
+    </div>
+    <div class="hero-visual reveal d2">
+      <div class="dash-card">
+        <div class="dash-hdr">
+          <span class="dash-hdr-title">FY2026 Budget — Draft</span>
+          <span class="dash-pill">3 scenarios</span>
+        </div>
+        <div class="dash-kpis">
+          <div class="kpi"><div class="kpi-label">Total headcount</div><div class="kpi-value">188</div><div class="kpi-sub">↑ 12 planned hires</div></div>
+          <div class="kpi"><div class="kpi-label">Full-year TEC</div><div class="kpi-value">$21.9M</div><div class="kpi-sub">Incl. super + packaging</div></div>
+          <div class="kpi"><div class="kpi-label">Operating expenses</div><div class="kpi-value">$3.4M</div><div class="kpi-sub">Across 6 cost centres</div></div>
+          <div class="kpi"><div class="kpi-label">Total budget</div><div class="kpi-value">$25.3M</div><div class="kpi-sub">↓ $430K vs prior year</div></div>
+        </div>
+        <div class="dash-bars">
+          <div class="bar-row"><span class="bar-lbl">Salaries</span><div class="bar-track"><div class="bar-fill" style="width:78%;background:var(--teal)"></div></div><span class="bar-val">$17.1M</span></div>
+          <div class="bar-row"><span class="bar-lbl">Super</span><div class="bar-track"><div class="bar-fill" style="width:12%;background:var(--accent)"></div></div><span class="bar-val">$2.6M</span></div>
+          <div class="bar-row"><span class="bar-lbl">Packaging</span><div class="bar-track"><div class="bar-fill" style="width:10%;background:rgba(93,202,165,.45)"></div></div><span class="bar-val">$2.2M</span></div>
+        </div>
+        <div class="mini-row">
+          <div class="mini"><div class="mini-icon">🔒</div><div class="mini-name">Budget status</div><div class="mini-val" style="font-size:12px;color:var(--accent)">Board approved</div></div>
+          <div class="mini"><div class="mini-icon">📊</div><div class="mini-name">YTD variance</div><div class="mini-val">−$48K</div></div>
+        </div>
       </div>
     </div>
   </div>
-  <section class="section" id="features">
-    <div class="section-label">Features</div>
-    <h2>Everything your finance team needs</h2>
-    <p>Built by a CFO/FD with 20+ years experience — Corellr solves the real problems finance teams face every budget cycle.</p>
-    <div class="features">
-      <div class="fc"><div class="fc-icon">👥</div><h3>Headcount budgeting</h3><p>Model people costs with full Australian super compliance. MCB capping, salary packaging, planned hires, leavers — all calculated correctly.</p></div>
-      <div class="fc"><div class="fc-icon">📋</div><h3>Opex planning</h3><p>Budget operating expenses by GL code, cost centre, and funding source. Monthly or annual entry. Import from CSV or enter line by line.</p></div>
-      <div class="fc"><div class="fc-icon">📊</div><h3>Consolidated P&amp;L</h3><p>See your complete budget in one board-ready view — people costs and opex combined with monthly columns and full-year totals.</p></div>
-      <div class="fc"><div class="fc-icon">🎯</div><h3>Multiple scenarios</h3><p>Model Base Case, Headcount Freeze, and Growth scenarios side by side. Each scenario is independent but draws from the same master roster.</p></div>
-      <div class="fc"><div class="fc-icon">🔒</div><h3>Locked opening position</h3><p>Approve and lock your budget baseline by department. Track variance between the approved plan and your working forecast throughout the year.</p></div>
-      <div class="fc"><div class="fc-icon">📥</div><h3>Bulk import</h3><p>Import employees from your HRIS via CSV. Preview changes before applying. Download a template to get started in minutes.</p></div>
+</section>
+
+<!-- FEATURES -->
+<section class="section features-section" id="features">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Features</p>
+      <h2 class="sec-title">Everything your finance team <em>actually</em> needs</h2>
+      <p class="sec-sub">Built by a CFO with 20+ years in the NFP sector. Corellr solves the problems finance teams face every single budget cycle.</p>
     </div>
-  </section>
-  <section class="nfp" id="nfp">
-    <h2>Built for Australian NFPs</h2>
-    <p>Corellr understands the complexity of NFP finance — salary packaging, grant-based headcount, restricted funds, and reporting to multiple funders.</p>
-    <div class="pills">
-      <span class="pill">Salary packaging (PBI &amp; standard)</span>
-      <span class="pill">Grant &amp; funding source tracking</span>
-      <span class="pill">Australian super compliance</span>
-      <span class="pill">MCB capping (quarterly)</span>
-      <span class="pill">Multiple funding sources</span>
-      <span class="pill">Cost centre reporting</span>
-    </div>
-    <a href="https://app.corellr.com" class="btn-p">Start free trial — no credit card required</a>
-  </section>
-  <div class="pricing-wrap" id="pricing">
-    <h2>Simple, transparent pricing</h2>
-    <p>30-day free trial on all plans. No credit card required.</p>
-    <div class="pricing">
-      <div class="pc">
-        <h3>Starter</h3>
-        <div class="price">$149<span>/mo</span></div>
-        <div class="price-note">Up to 3 users · Up to 100 employees</div>
-        <ul><li>Headcount budgeting</li><li>Opex planning</li><li>Consolidated P&amp;L</li><li>1 budget scenario</li><li>CSV import</li><li>Email support</li></ul>
-        <a href="https://app.corellr.com" class="btn-o">Start free trial</a>
+    <div class="feat-grid">
+      <div class="feat-card reveal d1">
+        <div class="feat-icon">👥</div>
+        <h3 class="feat-title">Headcount budgeting</h3>
+        <p class="feat-desc">Model all people costs with full Australian compliance. Superannuation, MCB capping, salary packaging (PBI &amp; standard), planned hires, and leavers — calculated correctly, automatically.</p>
       </div>
-      <div class="pc featured">
-        <div class="p-badge">Most popular</div>
-        <h3>Growth</h3>
-        <div class="price">$299<span>/mo</span></div>
-        <div class="price-note">Up to 10 users · Up to 500 employees</div>
-        <ul><li>Everything in Starter</li><li>Multiple scenarios</li><li>Variance reporting</li><li>Locked opening position</li><li>Master roster</li><li>Priority support</li></ul>
-        <a href="https://app.corellr.com" class="btn-f">Start free trial</a>
+      <div class="feat-card reveal d2">
+        <div class="feat-icon">📋</div>
+        <h3 class="feat-title">Opex planning</h3>
+        <p class="feat-desc">Budget operating expenses by GL code, cost centre, and funding source. Enter monthly or annual figures, import from CSV, or break down by quarter. Supports multiple funding sources per line.</p>
       </div>
-      <div class="pc">
-        <h3>Enterprise</h3>
-        <div class="price" style="font-size:28px">Custom</div>
-        <div class="price-note">Unlimited users &amp; employees</div>
-        <ul><li>Everything in Growth</li><li>Multi-entity support</li><li>Dedicated onboarding</li><li>Custom integrations</li><li>SLA guarantee</li><li>Dedicated support</li></ul>
-        <a href="mailto:hello@corellr.com" class="btn-o">Contact us</a>
+      <div class="feat-card reveal d3">
+        <div class="feat-icon">📊</div>
+        <h3 class="feat-title">Consolidated P&amp;L</h3>
+        <p class="feat-desc">See your complete budget in one board-ready view — headcount costs and opex combined, with monthly columns, full-year totals, and one-click Excel export.</p>
+      </div>
+      <div class="feat-card reveal d1">
+        <div class="feat-icon">🎯</div>
+        <h3 class="feat-title">Multiple budget scenarios</h3>
+        <p class="feat-desc">Model Base Case, Headcount Freeze, Growth, and custom scenarios side-by-side. Each scenario is independent but draws from the same master roster, so comparisons are always apples-to-apples.</p>
+      </div>
+      <div class="feat-card reveal d2">
+        <div class="feat-icon">🔒</div>
+        <h3 class="feat-title">Locked opening position</h3>
+        <p class="feat-desc">Approve and lock your budget baseline by department after board sign-off. Track variance between the approved plan and your rolling forecast in real-time throughout the year.</p>
+      </div>
+      <div class="feat-card reveal d3">
+        <div class="feat-icon">📥</div>
+        <h3 class="feat-title">Bulk import &amp; export</h3>
+        <p class="feat-desc">Import your employee roster from any HRIS or payroll system via CSV. Preview changes before applying. Export board packs, department reports, and scenario comparisons in Excel format.</p>
       </div>
     </div>
-    <p class="nfp-note"><strong>NFP discount: 30% off all plans</strong> for registered Australian charities. Contact us with your ABN to claim.</p>
   </div>
-  <footer>
-    <div class="foot">
-      <div class="foot-logo"><div class="foot-d"></div><span class="foot-brand">Corellr</span></div>
-      <ul class="foot-links"><li><a href="#features">Features</a></li><li><a href="#pricing">Pricing</a></li><li><a href="https://app.corellr.com">Sign in</a></li><li><a href="mailto:hello@corellr.com">Contact</a></li></ul>
-      <p class="foot-copy">© 2026 Corellr. Built for Australian NFP finance teams.</p>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how-section" id="how-it-works">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <p class="eyebrow">How it works</p>
+      <h2 class="sec-title">Up and running in an afternoon</h2>
+      <p class="sec-sub">No lengthy onboarding, no consultants, no six-month implementation. Most teams have their first budget built in under a day.</p>
     </div>
-  </footer>
-</div>
+    <div class="how-grid">
+      <div class="how-step reveal d1">
+        <div class="how-num">1</div>
+        <h3 class="how-title">Import your team</h3>
+        <p class="how-desc">Upload your employee roster from any HRIS or payroll system using our simple CSV template. Corellr maps your data and flags anything that needs attention.</p>
+      </div>
+      <div class="how-step reveal d2">
+        <div class="how-num">2</div>
+        <h3 class="how-title">Configure your setup</h3>
+        <p class="how-desc">Set up cost centres, funding sources, and salary packaging rules once. Corellr remembers your configuration and applies it automatically across every budget cycle.</p>
+      </div>
+      <div class="how-step reveal d3">
+        <div class="how-num">3</div>
+        <h3 class="how-title">Build your budget</h3>
+        <p class="how-desc">Model headcount and opex with real-time totals updating as you type. Run scenarios, compare options, and refine until the numbers are right.</p>
+      </div>
+      <div class="how-step reveal d4">
+        <div class="how-num">4</div>
+        <h3 class="how-title">Share with confidence</h3>
+        <p class="how-desc">Export board-ready reports in one click or share a live view directly with your CEO or audit committee. Lock the approved budget and track actuals throughout the year.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NFP SECTION -->
+<section class="nfp-section" id="nfp">
+  <div class="wrap">
+    <div class="nfp-head reveal">
+      <span class="nfp-eyebrow">Built for Australian NFPs</span>
+      <h2 class="nfp-title">We understand the complexity<br>of your sector</h2>
+      <p class="nfp-sub">Salary packaging rules, grant-based headcount, restricted funds, multiple funders. Corellr was built by people who lived this — not generic SaaS developers.</p>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-box reveal d1"><div class="stat-val">$15,900</div><div class="stat-lbl">Tax-free salary packaging cap for PBI employees per year</div></div>
+      <div class="stat-box reveal d2"><div class="stat-val">$9,010</div><div class="stat-lbl">Additional meal &amp; entertainment packaging available to NFP staff</div></div>
+      <div class="stat-box reveal d3"><div class="stat-val">48 hrs</div><div class="stat-lbl">Average time saved per budget cycle by Corellr customers</div></div>
+      <div class="stat-box reveal d4"><div class="stat-val">$4,700</div><div class="stat-lbl">Typical annual tax saving per employee through salary packaging</div></div>
+    </div>
+    <div class="nfp-feats">
+      <div class="nfp-feat reveal d1">
+        <div class="nfp-feat-icon">💼</div>
+        <div>
+          <h3 class="nfp-feat-title">Salary packaging compliance</h3>
+          <p class="nfp-feat-desc">Handles both PBI and standard salary packaging, including the $15,900 general living expenses cap, meal &amp; entertainment benefits, and MCB quarterly capping — correctly, every time.</p>
+        </div>
+      </div>
+      <div class="nfp-feat reveal d2">
+        <div class="nfp-feat-icon">🏛️</div>
+        <div>
+          <h3 class="nfp-feat-title">Grant &amp; funding source tracking</h3>
+          <p class="nfp-feat-desc">Assign headcount and costs to multiple funding sources and grants. See exactly what each program, fund, or grant is actually spending — and what's left in the envelope.</p>
+        </div>
+      </div>
+      <div class="nfp-feat reveal d3">
+        <div class="nfp-feat-icon">🇦🇺</div>
+        <div>
+          <h3 class="nfp-feat-title">Australian super compliance</h3>
+          <p class="nfp-feat-desc">Superannuation calculated at the current SGC rate with opt-in support. Corellr updates automatically when the rate changes — no manual adjustments required.</p>
+        </div>
+      </div>
+      <div class="nfp-feat reveal d4">
+        <div class="nfp-feat-icon">📑</div>
+        <div>
+          <h3 class="nfp-feat-title">Funder-ready reporting</h3>
+          <p class="nfp-feat-desc">Generate cost-centre and program-level reports that match your funder's templates. Demonstrate spend alignment without manual reconciliation.</p>
+        </div>
+      </div>
+    </div>
+    <div class="nfp-cta reveal">
+      <a href="https://app.corellr.com" class="btn-primary">Start your free 30-day trial</a>
+      <p class="nfp-note">No credit card required · Cancel anytime · NFP discount available</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section pricing-section" id="pricing">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <p class="eyebrow">Pricing</p>
+      <h2 class="sec-title">Simple, transparent pricing</h2>
+      <p class="sec-sub">30-day free trial on all plans. No credit card required. Cancel anytime. All prices in AUD&nbsp;+&nbsp;GST.</p>
+    </div>
+    <div class="pricing-grid reveal">
+      <div class="price-card">
+        <div class="price-tier">Starter</div>
+        <div class="price-name">Foundation</div>
+        <div class="price-amount"><span class="price-currency">$</span><span class="price-num">149</span><span class="price-period">/mo</span></div>
+        <p class="price-desc">Up to 3 users · Up to 100 employees · 1 budget scenario</p>
+        <ul class="price-features">
+          <li><span class="pcheck">✓</span>Headcount budgeting</li>
+          <li><span class="pcheck">✓</span>Opex planning</li>
+          <li><span class="pcheck">✓</span>Consolidated P&amp;L view</li>
+          <li><span class="pcheck">✓</span>Salary packaging support</li>
+          <li><span class="pcheck">✓</span>CSV import &amp; export</li>
+          <li><span class="pcheck">✓</span>Email support</li>
+        </ul>
+        <a href="https://app.corellr.com" class="btn-outline">Start free trial</a>
+      </div>
+      <div class="price-card pop">
+        <div class="pop-badge">Most popular</div>
+        <div class="price-tier">Growth</div>
+        <div class="price-name">Professional</div>
+        <div class="price-amount"><span class="price-currency">$</span><span class="price-num">299</span><span class="price-period">/mo</span></div>
+        <p class="price-desc">Up to 10 users · Up to 500 employees · Unlimited scenarios</p>
+        <ul class="price-features">
+          <li><span class="pcheck">✓</span>Everything in Foundation</li>
+          <li><span class="pcheck">✓</span>Multiple budget scenarios</li>
+          <li><span class="pcheck">✓</span>Variance &amp; actuals tracking</li>
+          <li><span class="pcheck">✓</span>Locked opening position</li>
+          <li><span class="pcheck">✓</span>Master roster view</li>
+          <li><span class="pcheck">✓</span>Priority support</li>
+        </ul>
+        <a href="https://app.corellr.com" class="btn-filled">Start free trial</a>
+      </div>
+      <div class="price-card">
+        <div class="price-tier">Enterprise</div>
+        <div class="price-name">Custom</div>
+        <div class="price-amount" style="margin-bottom:6px"><span class="price-num" style="font-size:32px">Talk to us</span></div>
+        <p class="price-desc">Unlimited users · Unlimited employees · Multi-entity</p>
+        <ul class="price-features">
+          <li><span class="pcheck">✓</span>Everything in Professional</li>
+          <li><span class="pcheck">✓</span>Multi-entity support</li>
+          <li><span class="pcheck">✓</span>Custom integrations</li>
+          <li><span class="pcheck">✓</span>Dedicated onboarding</li>
+          <li><span class="pcheck">✓</span>SLA guarantee</li>
+          <li><span class="pcheck">✓</span>Dedicated account manager</li>
+        </ul>
+        <a href="#contact" class="btn-outline">Contact us</a>
+      </div>
+    </div>
+    <p class="pricing-footer-note reveal"><strong>NFP discount: 30% off all plans</strong> for registered Australian charities. <a href="#contact">Contact us</a> with your ABN to claim.</p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section about-section" id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="reveal">
+        <p class="eyebrow">About Corellr</p>
+        <h2 class="sec-title">Built from the inside</h2>
+        <p class="about-body">Corellr was built by finance professionals who spent years managing NFP budgets in Excel. We know the pain of salary packaging calculations, grant reporting, and trying to present a consolidated P&amp;L to a board when your data lives across six spreadsheets.</p>
+        <p class="about-body">We believe not-for-profit finance teams deserve modern tools. The work you do is too important to be slowed down by workarounds and manual reconciliations.</p>
+        <div class="about-values">
+          <div class="about-val"><div class="val-dot"></div>Purpose-built for Australian NFP compliance</div>
+          <div class="about-val"><div class="val-dot"></div>Designed for your specific workflows, not generic SaaS</div>
+          <div class="about-val"><div class="val-dot"></div>Priced for the sector, not the corporate market</div>
+          <div class="about-val"><div class="val-dot"></div>Continuously improved with direct customer feedback</div>
+        </div>
+      </div>
+      <div class="about-quote-card reveal d2">
+        <p class="quote-text">"I spent fifteen years as a CFO in the disability and aged care sectors. Every budget season was a fight against spreadsheets. Corellr is what I wished existed back then."</p>
+        <div class="quote-author">
+          <div class="q-avatar">C</div>
+          <div>
+            <div class="q-name">Corellr Founding Team</div>
+            <div class="q-role">Former NFP Finance Directors</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section contact-section" id="contact">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div class="reveal">
+        <p class="eyebrow">Get in touch</p>
+        <h2 class="sec-title">Let's talk about your budget cycle</h2>
+        <p class="contact-body">Whether you're ready to start or just want to understand how Corellr fits your organisation, we'd love to hear from you.</p>
+        <div class="contact-items">
+          <div class="contact-item"><div class="ci-icon">✉️</div>hello@corellr.com</div>
+          <div class="contact-item"><div class="ci-icon">💬</div>Usually reply within one business day</div>
+          <div class="contact-item"><div class="ci-icon">🇦🇺</div>Based in Australia — AEST timezone</div>
+          <div class="contact-item"><div class="ci-icon">🎁</div>30% NFP discount for registered charities</div>
+        </div>
+      </div>
+      <div class="contact-form reveal d2">
+        <form id="cf" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="fg"><label class="flabel" for="fn">First name</label><input class="finput" type="text" id="fn" placeholder="Jane" required></div>
+            <div class="fg"><label class="flabel" for="ln">Last name</label><input class="finput" type="text" id="ln" placeholder="Smith" required></div>
+          </div>
+          <div class="fg"><label class="flabel" for="em">Work email</label><input class="finput" type="email" id="em" placeholder="jane@yourorg.com.au" required></div>
+          <div class="form-row">
+            <div class="fg"><label class="flabel" for="org">Organisation</label><input class="finput" type="text" id="org" placeholder="Your NFP name" required></div>
+            <div class="fg"><label class="flabel" for="role">Your role</label><input class="finput" type="text" id="role" placeholder="CFO / Finance Manager"></div>
+          </div>
+          <div class="fg" style="margin-bottom:0"><label class="flabel" for="msg">Message</label><textarea class="ftextarea" id="msg" placeholder="Tell us about your organisation and what you're trying to solve..."></textarea></div>
+          <div class="form-cta"><button type="submit" class="btn-primary">Send message</button></div>
+          <div class="form-success" id="fs">Thanks — we'll be in touch within one business day.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <a href="#" class="nav-logo" style="margin-bottom:0">
+          <div class="nav-gem"></div>
+          <span class="nav-wordmark">Corellr</span>
+        </a>
+        <p class="footer-brand-desc">Budget planning purpose-built for Australian not-for-profit finance teams.</p>
+        <a href="https://app.corellr.com" class="footer-cta">Start free trial →</a>
+      </div>
+      <div>
+        <p class="footer-col-title">Product</p>
+        <ul class="footer-links">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="https://app.corellr.com">Sign in</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Company</p>
+        <ul class="footer-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="mailto:hello@corellr.com">hello@corellr.com</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">NFP Resources</p>
+        <ul class="footer-links">
+          <li><a href="#nfp">NFP features</a></li>
+          <li><a href="#nfp">Salary packaging</a></li>
+          <li><a href="#nfp">Super compliance</a></li>
+          <li><a href="#contact">NFP discount</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Corellr Pty Ltd. Built for Australian NFP finance teams.</p>
+      <ul class="footer-legal">
+        <li><a href="#">Privacy policy</a></li>
+        <li><a href="#">Terms of service</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
 <script>
-const PW="corellr2026";
-document.getElementById("pw").addEventListener("keydown",function(e){if(e.key==="Enter")check()});
-function check(){
-  const v=document.getElementById("pw").value;
-  const e=document.getElementById("err");
-  if(v===PW){
-    document.getElementById("login-screen").style.display="none";
-    document.getElementById("site").style.display="block";
-    sessionStorage.setItem("corellr_preview","1");
-  } else {
-    e.style.display="block";
-    document.getElementById("pw").value="";
-    document.getElementById("pw").focus();
-  }
-}
-if(sessionStorage.getItem("corellr_preview")==="1"){
-  document.getElementById("login-screen").style.display="none";
-  document.getElementById("site").style.display="block";
+// Nav scroll state
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passive:true});
+
+// Mobile menu
+const burger=document.getElementById('burger');
+const drawer=document.getElementById('drawer');
+let open=false;
+burger.addEventListener('click',()=>{open=!open;drawer.style.display=open?'block':'none'});
+drawer.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{open=false;drawer.style.display='none'}));
+
+// Scroll reveal — IntersectionObserver
+const els=document.querySelectorAll('.reveal');
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}});
+},{threshold:0.1,rootMargin:'0px 0px -36px 0px'});
+els.forEach(el=>io.observe(el));
+
+// Hero elements visible immediately (above fold)
+document.querySelectorAll('.hero .reveal').forEach(el=>el.classList.add('visible'));
+
+// Smooth scroll for anchors
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    const t=document.querySelector(this.getAttribute('href'));
+    if(t){e.preventDefault();window.scrollTo({top:t.getBoundingClientRect().top+scrollY-76,behavior:'smooth'})}
+  });
+});
+
+// Contact form
+function handleSubmit(e){
+  e.preventDefault();
+  const form=document.getElementById('cf');
+  form.style.opacity='.5';form.style.pointerEvents='none';
+  setTimeout(()=>{
+    document.getElementById('fs').style.display='block';
+    form.querySelector('button[type=submit]').style.display='none';
+  },700);
 }
 </script>
 </body>
